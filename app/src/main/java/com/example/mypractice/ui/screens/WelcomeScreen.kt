@@ -12,8 +12,8 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 
 @Composable
-fun WelcomeScreen(){
-    Surface (modifier = Modifier.fillMaxSize()){
-        Text(text = Routes.WELCOME_SCREEN, modifier = Modifier.fillMaxWidth().height(50.dp))
+fun WelcomeScreen() {
+    Surface(modifier = Modifier.fillMaxSize()) {
+        TopBar(value = "Welcome to DFB")
     }
 }
