@@ -2,14 +2,21 @@ package com.example.mypractice.ui.screens
 
 import android.media.Image
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -56,7 +63,7 @@ fun ReusableText(value: String, fontSize: TextUnit, fontWeight: FontWeight, colo
 }
 
 @Composable
-fun ReusableTextField(onTextChanged:(name:String)->Unit) {
+fun ReusableTextField(onTextChanged: (name: String) -> Unit) {
     var currentValue by remember {
         mutableStateOf("")
     }
@@ -75,17 +82,47 @@ fun ReusableTextField(onTextChanged:(name:String)->Unit) {
         keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
         keyboardActions = KeyboardActions { localFocusManager.clearFocus() },
         onValueChange = {
-            currentValue=it
+            currentValue = it
             onTextChanged(it)
         })
 }
 
 @Composable
-fun ImageCard(image: Int){
-    Card (modifier = Modifier.size(130.dp)){
-        Image(
-            modifier = Modifier.padding(10.dp),
-            painter = painterResource(id = image), contentDescription = "")
+fun ReusableImageCard(
+    image: Int,
+    isSelected: Boolean,
+    animalSelected: (animalName: String) -> Unit
+) {
+    val localFocusManager = LocalFocusManager.current
+    Card(modifier = Modifier.size(130.dp), elevation = CardDefaults.cardElevation(4.dp)) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .border(
+                    width = 1.dp,
+                    shape = RoundedCornerShape(12.dp),
+                    color = if (isSelected) Color.Green else Color.Transparent
+                )
+        ) {
+            Image(
+                modifier = Modifier
+                    .padding(10.dp)
+                    .clickable {
+                        val animalName = if (image == R.drawable.clear) "clear" else "tick"
+                        animalSelected(animalName)
+                        localFocusManager.clearFocus()
+                    },
+                painter = painterResource(id = image), contentDescription = ""
+            )
+        }
+    }
+}
+
+@Composable
+fun ReusableButton(goToDetailsScreen:()->Unit){
+    Button(modifier = Modifier.fillMaxWidth(),
+        onClick = { goToDetailsScreen() }) {
+        ReusableText(value = "Go To Details Screen", fontSize = 20.sp, fontWeight = FontWeight.Normal, color = Color.White)
     }
 }
 

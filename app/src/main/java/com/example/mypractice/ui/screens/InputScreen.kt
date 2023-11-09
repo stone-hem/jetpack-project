@@ -1,6 +1,5 @@
 package com.example.mypractice.ui.screens
 
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -17,12 +16,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.example.mypractice.R
 import com.example.mypractice.data.UserDataUiEvents
 import com.example.mypractice.ui.UserInputViewModel
 
 @Composable
-fun InputScreen(userInputViewModel: UserInputViewModel) {
+fun InputScreen(userInputViewModel: UserInputViewModel,navHostController: NavHostController) {
     Surface(modifier = Modifier
         .fillMaxSize()
        ) {
@@ -54,8 +54,24 @@ fun InputScreen(userInputViewModel: UserInputViewModel) {
             ReusableText(value = "What Do you Like?", fontSize = 20.sp, fontWeight = FontWeight.Normal, color = MaterialTheme.colorScheme.onPrimary)
             Spacer(modifier = Modifier.height(30.dp))
             Row (modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceAround){
-                ImageCard(image = R.drawable.logo)
-                ImageCard(image = R.drawable.ic_launcher_background)
+                ReusableImageCard(image = R.drawable.clear, animalSelected = {
+                    userInputViewModel.onEvent(
+                        UserDataUiEvents.UserAnimalEntered(it)
+                    )
+
+                }, isSelected = userInputViewModel.uiState.value.animalSelected.equals("clear"))
+                ReusableImageCard(image = R.drawable.check, animalSelected = {
+                    userInputViewModel.onEvent(
+                        UserDataUiEvents.UserAnimalEntered(it)
+                    )
+                },isSelected = userInputViewModel.uiState.value.animalSelected=="tick")
+            }
+            Spacer(modifier = Modifier.weight(1f))
+            if (userInputViewModel.isValidState())
+            {
+                ReusableButton(goToDetailsScreen = {
+                    navHostController.navigate(Routes.WELCOME_SCREEN+"/${userInputViewModel.uiState.value.nameEntered}/${userInputViewModel.uiState.value.animalSelected}")
+                })
             }
 
         }
