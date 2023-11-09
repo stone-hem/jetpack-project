@@ -21,29 +21,37 @@ import androidx.compose.ui.unit.sp
 @Composable
 fun WelcomeScreen(username: String?, animal: String?) {
     Surface(modifier = Modifier.fillMaxSize()) {
-        Column (
+        Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(20.dp)
-        ){
+        ) {
             TopBar(value = "Welcome to DFB")
             Spacer(modifier = Modifier.height(20.dp))
             ReusableText(
                 value = "Welcome $username",
                 fontSize = 30.sp,
                 fontWeight = FontWeight.Normal,
-                color = Color.Gray
+                color = Color.Gray,
+                letterSpacing = 3.sp
             )
             Spacer(modifier = Modifier.height(20.dp))
-           Row {
-               ReusableText(
-                   value = if (animal=="tick")"You are a Successful!" else "You Have Failed The Test!",
-                   fontSize = 24.sp,
-                   fontWeight = FontWeight.Light,
-                   color = Color.Gray
-               )
-               Icon(imageVector = if (animal=="tick") Icons.Filled.Check else Icons.Filled.Clear, contentDescription = "")
-           }
+            Row {
+                ReusableText(
+                    value = if (animal == "tick") "You are a Successful!" else "You Have Failed The Test!",
+                    fontSize = 24.sp,
+                    fontWeight = FontWeight.Light,
+                    color = Color.Gray,
+                    letterSpacing = 3.sp
+                )
+                Icon(
+                    imageVector = if (animal == "tick") Icons.Filled.Check else Icons.Filled.Clear,
+                    contentDescription = ""
+                )
+            }
+            Spacer(modifier = Modifier.height(50.dp))
+            ReusableFact(value = "The One Fact About Masters is that They Never Disappoint")
+
         }
     }
 }

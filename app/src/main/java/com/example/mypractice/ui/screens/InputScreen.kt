@@ -22,10 +22,11 @@ import com.example.mypractice.data.UserDataUiEvents
 import com.example.mypractice.ui.UserInputViewModel
 
 @Composable
-fun InputScreen(userInputViewModel: UserInputViewModel,navHostController: NavHostController) {
-    Surface(modifier = Modifier
-        .fillMaxSize()
-       ) {
+fun InputScreen(userInputViewModel: UserInputViewModel, navHostController: NavHostController) {
+    Surface(
+        modifier = Modifier
+            .fillMaxSize()
+    ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -37,23 +38,46 @@ fun InputScreen(userInputViewModel: UserInputViewModel,navHostController: NavHos
                 value = "Let's Learn About You!",
                 fontSize = 30.sp,
                 fontWeight = FontWeight.Normal,
-                color = Color.Gray
+                color = Color.Gray,
+                letterSpacing = 3.sp
             )
             Spacer(modifier = Modifier.height(20.dp))
             ReusableText(
                 value = "The the application will provide suggestions according to your input",
                 fontSize = 24.sp,
                 fontWeight = FontWeight.Light,
-                color = Color.Gray
+                color = Color.Gray,
+                letterSpacing = 3.sp
             )
             Spacer(modifier = Modifier.height(60.dp))
-            ReusableText(value = "Name", fontSize = 20.sp, fontWeight = FontWeight.Normal, color = MaterialTheme.colorScheme.onPrimary)
+            ReusableText(
+                value = "Name",
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Normal,
+                color = MaterialTheme.colorScheme.onPrimary,
+                letterSpacing = 3.sp
+            )
             Spacer(modifier = Modifier.height(10.dp))
-            ReusableTextField(onTextChanged = {userInputViewModel.onEvent(UserDataUiEvents.UserNameEntered(it))})
+            ReusableTextField(onTextChanged = {
+                userInputViewModel.onEvent(
+                    UserDataUiEvents.UserNameEntered(
+                        it
+                    )
+                )
+            })
             Spacer(modifier = Modifier.height(30.dp))
-            ReusableText(value = "What Do you Like?", fontSize = 20.sp, fontWeight = FontWeight.Normal, color = MaterialTheme.colorScheme.onPrimary)
+            ReusableText(
+                value = "What Do you Like?",
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Normal,
+                color = MaterialTheme.colorScheme.onPrimary,
+                letterSpacing = 3.sp
+            )
             Spacer(modifier = Modifier.height(30.dp))
-            Row (modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceAround){
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceAround
+            ) {
                 ReusableImageCard(image = R.drawable.clear, animalSelected = {
                     userInputViewModel.onEvent(
                         UserDataUiEvents.UserAnimalEntered(it)
@@ -64,13 +88,12 @@ fun InputScreen(userInputViewModel: UserInputViewModel,navHostController: NavHos
                     userInputViewModel.onEvent(
                         UserDataUiEvents.UserAnimalEntered(it)
                     )
-                },isSelected = userInputViewModel.uiState.value.animalSelected=="tick")
+                }, isSelected = userInputViewModel.uiState.value.animalSelected == "tick")
             }
             Spacer(modifier = Modifier.weight(1f))
-            if (userInputViewModel.isValidState())
-            {
+            if (userInputViewModel.isValidState()) {
                 ReusableButton(goToDetailsScreen = {
-                    navHostController.navigate(Routes.WELCOME_SCREEN+"/${userInputViewModel.uiState.value.nameEntered}/${userInputViewModel.uiState.value.animalSelected}")
+                    navHostController.navigate(Routes.WELCOME_SCREEN + "/${userInputViewModel.uiState.value.nameEntered}/${userInputViewModel.uiState.value.animalSelected}")
                 })
             }
 

@@ -42,7 +42,8 @@ fun TopBar(value: String) {
             value = value,
             fontSize = 28.sp,
             fontWeight = FontWeight.Bold,
-            color = Color(0xff097969)
+            color = Color(0xff097969),
+            letterSpacing = 2.sp
         )
         Image(
             modifier = Modifier.size(50.dp),
@@ -53,12 +54,19 @@ fun TopBar(value: String) {
 }
 
 @Composable
-fun ReusableText(value: String, fontSize: TextUnit, fontWeight: FontWeight, color: Color) {
+fun ReusableText(
+    value: String,
+    fontSize: TextUnit,
+    fontWeight: FontWeight,
+    color: Color,
+    letterSpacing: TextUnit
+) {
     Text(
         text = value,
         fontSize = fontSize,
         fontWeight = fontWeight,
-        color = color
+        color = color,
+        letterSpacing = letterSpacing
     )
 }
 
@@ -76,7 +84,8 @@ fun ReusableTextField(onTextChanged: (name: String) -> Unit) {
                 value = "Enter Your Name",
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Light,
-                color = Color.Gray
+                color = Color.Gray,
+                letterSpacing = 3.sp
             )
         },
         keyboardOptions = KeyboardOptions(imeAction = ImeAction.Done),
@@ -119,10 +128,35 @@ fun ReusableImageCard(
 }
 
 @Composable
-fun ReusableButton(goToDetailsScreen:()->Unit){
+fun ReusableButton(goToDetailsScreen: () -> Unit) {
     Button(modifier = Modifier.fillMaxWidth(),
         onClick = { goToDetailsScreen() }) {
-        ReusableText(value = "Go To Details Screen", fontSize = 20.sp, fontWeight = FontWeight.Normal, color = Color.White)
+        ReusableText(
+            value = "Go To Details Screen",
+            fontSize = 20.sp,
+            fontWeight = FontWeight.Normal,
+            color = Color.White,
+            letterSpacing = 3.sp
+        )
+    }
+}
+
+@Composable
+fun ReusableFact(value: String) {
+    Card(
+        modifier = Modifier
+            .padding(10.dp)
+            .fillMaxWidth(),
+        shape = RoundedCornerShape(8.dp),
+        elevation = CardDefaults.cardElevation(8.dp)
+    ) {
+        ReusableText(
+            value = value,
+            fontSize = 30.sp,
+            fontWeight = FontWeight.Medium,
+            color = Color.Black,
+            letterSpacing = 8.sp
+        )
     }
 }
 
