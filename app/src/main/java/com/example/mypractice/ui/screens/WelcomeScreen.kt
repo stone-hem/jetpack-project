@@ -1,10 +1,15 @@
 package com.example.mypractice.ui.screens
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.Clear
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -30,12 +35,15 @@ fun WelcomeScreen(username: String?, animal: String?) {
                 color = Color.Gray
             )
             Spacer(modifier = Modifier.height(20.dp))
-            ReusableText(
-                value = "Thank You For Letting me Learn!",
-                fontSize = 24.sp,
-                fontWeight = FontWeight.Light,
-                color = Color.Gray
-            )
+           Row {
+               ReusableText(
+                   value = if (animal=="tick")"You are a Successful!" else "You Have Failed The Test!",
+                   fontSize = 24.sp,
+                   fontWeight = FontWeight.Light,
+                   color = Color.Gray
+               )
+               Icon(imageVector = if (animal=="tick") Icons.Filled.Check else Icons.Filled.Clear, contentDescription = "")
+           }
         }
     }
 }
